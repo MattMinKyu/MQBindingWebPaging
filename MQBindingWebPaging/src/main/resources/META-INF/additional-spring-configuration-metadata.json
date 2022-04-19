@@ -1,0 +1,47 @@
+{"properties": [
+  {
+    "name": "rabbitmq",
+    "type": "java.lang.String",
+    "description": "A description for 'rabbitmq'"
+  },
+  {
+    "name": "host",
+    "type": "java.lang.String",
+    "description": "A description for 'host'"
+  },
+  {
+    "name": "port",
+    "type": "java.lang.String",
+    "description": "A description for 'port'"
+  },
+  {
+    "name": "username",
+    "type": "java.lang.String",
+    "description": "A description for 'username'"
+  },
+  {
+    "name": "password",
+    "type": "java.lang.String",
+    "description": "A description for 'password'"
+  },
+  {
+    "name": "spring",
+    "type": "java.lang.String",
+    "description": "A description for 'spring'"
+  },
+  {
+    "name": "suffix",
+    "type": "java.lang.String",
+    "description": "A description for 'suffix'"
+  },
+  {
+    "name": "thymeleaf",
+    "type": "java.lang.String",
+    "description": "A description for 'thymeleaf'"
+  },
+  {
+    "name": "prefix",
+    "type": "java.lang.String",
+    "description": "A description for 'prefix'"
+  }
+]}
