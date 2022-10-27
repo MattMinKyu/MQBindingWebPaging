@@ -1,0 +1,30 @@
+[INFO ] 10:33:07.566 c.y.m.p.MqBindingWebPagingApplication logStarting - Starting MqBindingWebPagingApplication using Java 17.0.1 on DESKTOP-NHDGT7J with PID 8952 (C:\Users\mattmk\git\MQBindingWebPaging\MQBindingWebPaging\bin\main started by mattmk in C:\Users\mattmk\git\MQBindingWebPaging\MQBindingWebPaging)
+[INFO ] 10:33:07.570 c.y.m.p.MqBindingWebPagingApplication logStartupProfileInfo - No active profile set, falling back to 1 default profile: "default"
+[INFO ] 10:33:11.821 c.y.m.p.MqBindingWebPagingApplication logStarted - Started MqBindingWebPagingApplication in 4.811 seconds (JVM running for 5.986)
+[INFO ] 10:33:22.545 c.y.m.p.s.YtnUtilServiceImpl getBufferCaptionsData - strData.length() =====> 
+[INFO ] 10:33:22.642 c.y.m.p.s.YtnUtilServiceImpl getBufferCaptionsData - strData.length() =====> 
+[INFO ] 10:33:25.616 c.y.m.p.s.YtnUtilServiceImpl getBufferCaptionsData - strData.length() =====> 
+[INFO ] 10:33:25.846 c.y.m.p.s.YtnUtilServiceImpl getBufferCaptionsData - strData.length() =====> 
+[INFO ] 10:33:25.961 c.y.m.p.s.YtnUtilServiceImpl getBufferCaptionsData - strData.length() =====> 
+[INFO ] 10:33:28.499 c.y.m.p.s.YtnUtilServiceImpl getBufferCaptionsData - strData.length() =====> 
+[INFO ] 10:33:28.870 c.y.m.p.s.YtnUtilServiceImpl getBufferCaptionsData - strData.length() =====> 
+[INFO ] 10:33:28.977 c.y.m.p.s.YtnUtilServiceImpl getBufferCaptionsData - strData.length() =====> 
+[INFO ] 10:33:29.692 jdbc.sqlonly sqlOccurred - INSERT INTO MK_DB.CAPTION_DETAIL (CAPTION_IDX, CONTEXT, INS_DATE, UPD_USERID, UPD_DATE, MQ_INS_DATE)
+		VALUES('20221012103328701', '[앵커] 본질을 왜곡하지 말아달라. 그러면 본심이 뭐라는 겁니까?
+ ', sysdate, 'SYSTEM', TO_TIMESTAMP('2022-10-12 10:33:28.701', 'YYYY-MM-DD HH24:MI:SS.FF'), TO_TIMESTAMP('2022-10-12 10:33:28.701', 'YYYY-MM-DD HH24:MI:SS.FF'))
+
+[INFO ] 10:33:29.702 c.y.m.p.s.YtnUtilServiceImpl getBufferCaptionsData - strData.length() =====> 
+[INFO ] 10:33:29.702 c.y.m.p.s.YtnUtilServiceImpl getBufferCaptionsData - strData.length() =====> 
+[INFO ] 10:33:32.141 c.y.m.p.s.YtnUtilServiceImpl getBufferCaptionsData - strData.length() =====> 
+[INFO ] 10:33:32.316 c.y.m.p.s.YtnUtilServiceImpl getBufferCaptionsData - strData.length() =====> 
+[INFO ] 10:33:32.486 c.y.m.p.s.YtnUtilServiceImpl getBufferCaptionsData - strData.length() =====> 
+[INFO ] 10:33:32.650 c.y.m.p.s.YtnUtilServiceImpl getBufferCaptionsData - strData.length() =====> 
+[INFO ] 10:33:32.656 jdbc.sqlonly sqlOccurred - INSERT INTO MK_DB.CAPTION_DETAIL (CAPTION_IDX, CONTEXT, INS_DATE, UPD_USERID, UPD_DATE, MQ_INS_DATE)
+		VALUES('20221012103332371', '[김병민] 페이스북 전체 메시지가 꽤 장문의 글을 적었습니다.
+ ', sysdate, 'SYSTEM', TO_TIMESTAMP('2022-10-12 10:33:32.371', 'YYYY-MM-DD HH24:MI:SS.FF'), TO_TIMESTAMP('2022-10-12 10:33:32.371', 'YYYY-MM-DD HH24:MI:SS.FF'))
+
+[INFO ] 10:33:33.115 c.y.m.p.s.YtnUtilServiceImpl getBufferCaptionsData - strData.length() =====> 
+[INFO ] 10:33:33.404 c.y.m.p.s.YtnUtilServiceImpl getBufferCaptionsData - strData.length() =====> 
+[INFO ] 10:33:34.697 c.y.m.p.s.YtnUtilServiceImpl getBufferCaptionsData - strData.length() =====> 
+[INFO ] 10:33:34.895 c.y.m.p.s.YtnUtilServiceImpl getBufferCaptionsData - strData.length() =====> 
+[INFO ] 10:33:35.008 c.y.m.p.s.YtnUtilServiceImpl getBufferCaptionsData - strData.length() =====> 

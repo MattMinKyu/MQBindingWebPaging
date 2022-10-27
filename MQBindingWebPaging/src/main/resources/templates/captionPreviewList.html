@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+	
+    <title>YTN 실시간 속기사 Caption List 미리보기</title>
+
+    <script type="text/javascript" th:src="@{/vendor/jquery/jquery.min.js}"></script>
+    <!-- Bootstrap core JavaScript-->
+    <script type="text/javascript" th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <!-- Core plugin JavaScript-->
+    <script type="text/javascript" th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
+    <!-- Custom scripts for all pages-->
+    <script type="text/javascript" th:src="@{/js/sb-admin-2.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/jquery.cookie.js}"></script>
+    <!-- ytn js file -->
+    <script type="text/javascript" th:src="@{/js/ytn.util.js}"></script>
+    <script type="text/javascript" th:src="@{/js/ytn.datetimepicker.js}"></script>
+
+    <link th:href="@{/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet">
+    <!-- Custom styles for this template-->
+    <link th:href="@{/css/sb-admin-2.min.css}" rel="stylesheet">
+    <link th:href="@{/css/font.css}" rel="stylesheet">
+</head>
+<body id="page-top">
+ <!-- Page Wrapper -->
+ <div id="wrapper">
+		<!-- Content Wrapper -->
+		<div id="content-wrapper" class="d-flex flex-column">
+			<!-- Main Content -->
+			<div id="content">
+				<!-- Begin Page Content -->
+				<div class="container-fluid">
+                    <div class="card shadow mb-4">
+                    </div>
+					<div id="cardBody">
+                        <!-- <input type="text" id="captionText" style="width:70%;font-size:15px;font-family:'Malgun Gothic';color: black;"></input>
+                        &nbsp;&nbsp; -->
+                        <p id="captionsPreviewData"></p>
+                        <a href="#" class="btn btn-secondary btn-icon-split" style="width:10%;float:right;" onclick="popupCloseBtn()">
+                            <span class="text">닫기</span>
+                        </a>
+					</div>
+			</div>
+			<!-- /.container-fluid -->
+			</div>
+		</div>
+		<!-- End of Content Wrapper -->
+</div>
+<!-- End of Page Wrapper -->
+
+<script th:inline="javascript">
+
+// 실행시, 데이터 호출.
+getPreviewData();
+
+/**
+ * 데이터 읽어오기.
+ * @author : mattmk
+*/
+ function getPreviewData(){
+    var searchStrDateParam = $("#searchStrDate", opener.document).val();
+    var searchEndDateParam = $("#searchEndDate", opener.document).val();
+    var searchTextParam = $("#searchText", opener.document).val();
+
+    console.log('searchStrDateParam ---> ', searchStrDateParam);
+    console.log('searchEndDateParam ---> ', searchEndDateParam);
+    console.log('searchTextParam ---> ', searchTextParam);
+
+    $.ajax({
+        type: "POST",
+        url: "/ytn/captions/data/getPreviewData", 
+        data: {searchStrDate : searchStrDateParam
+                ,searchEndDate : searchEndDateParam
+                ,searchText : searchTextParam},  
+        dataType : "json",
+        beforeSend: function () {
+				var width = 0;
+				var height = 0;
+				var left = 0;
+				var top = 0;
+			 
+			    width = 150;
+				height = 150;
+				top = ( $(window).height() - height ) / 2 + $(window).scrollTop();
+				left = ( $(window).width() - width ) / 2 + $(window).scrollLeft();
+			 
+			    if($("#div_ajax_load_image").length != 0) {
+					$("#div_ajax_load_image").css({"top": top+"px","left": left+"px"});
+					$("#div_ajax_load_image").show();
+				}else {
+					$('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="/img/ajax_loader6.gif" style="width:150px; height:150px;"></div>');
+				}
+			},
+        success : function(data){
+            console.log('data ===> ', data);
+            if(data == ''){
+					alert('해당 데이터가 없습니다.');
+					$("#div_ajax_load_image").hide();
+					return false;
+			}
+
+            var captionsPreviewData = document.getElementById("captionsPreviewData");
+            data = data.replaceAll('\n','<br/>');
+
+            captionsPreviewData.insertAdjacentHTML("beforeend", data);
+            //$('#captionsPreviewData').text(data);
+            //console.log('data.context ===> ', data.context);
+            //$('#captionText').val(data.context);
+        },
+        complete: function () {
+				//setTimeout(function() {
+					$("#div_ajax_load_image").hide();
+				  //}, 3000);
+		},
+        error:function(request,status,error){
+            console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+            alert("관리자에게 문의해 주세요.");
+        }
+    });
+}
+
+/**
+ * 수정팝업창 닫기.
+ * @author : mattmk
+*/
+function popupCloseBtn() {
+    //opener.location.reload();
+    window.close();
+}
+
+</script>
+
+</body>
+
+</html>

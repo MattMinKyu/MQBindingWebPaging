@@ -8,8 +8,8 @@ import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -17,68 +17,39 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
-/*
-@Configuration
-public class RabbitConfiguration {
-
-	
-    private static final String queueName = "sample.queues";
-
-    private static final String topicExchangeName = "sample.exchange2";
-
-    @Bean
-    Queue queue() {
-        return new Queue(queueName, false);
-    }
-
-    @Bean
-    TopicExchange exchange() {
-        return new TopicExchange(topicExchangeName);
-    }
-
-    @Bean
-    Binding binding(Queue queue, TopicExchange exchange) {
-        return BindingBuilder.bind(queue).to(exchange).with("foo.bar.#");
-    }
-
-    @Bean
-    RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory,
-                                  MessageConverter messageConverter) {
-        RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
-        rabbitTemplate.setMessageConverter(messageConverter);
-        return rabbitTemplate;
-    }
-
-    @Bean
-    MessageConverter messageConverter() {
-        return new Jackson2JsonMessageConverter();
-    }
-    
-}
-
-*/
-
 @Configuration
 @EnableRabbit
 public class RabbitConfiguration {
-
-    private static final String CHAT_QUEUE_NAME = "chat.queue";
+	
+    private static final String CHAT_QUEUE_NAME = "dtvcc_global3";
+    private static final String CHAT_EXCHANGE_NAME = "DTVCC";
+    private static final String ROUTING_KEY = "ytn.dtvcc.data";
+	
+    /*
+	private static final String CHAT_QUEUE_NAME = "chat.queue";
     private static final String CHAT_EXCHANGE_NAME = "chat.exchange";
     private static final String ROUTING_KEY = "mattmk.routing.key";
-
- // Queue ���
+    */
+    
+    @Value("${spring.rabbitmq.host}")
+    private String host;
+    
+    @Value("${spring.rabbitmq.username}")
+    private String username;
+    
+    @Value("${spring.rabbitmq.password}")
+    private String password;
+    
     @Bean
     public Queue queue() {
         return new Queue(CHAT_QUEUE_NAME, true);
     }
 
-    // Exchange ���
     @Bean
     public TopicExchange exchange() {
         return new TopicExchange(CHAT_EXCHANGE_NAME);
     }
 
-    // Exchange �� Queue ���ε�
     @Bean
     public Binding binding() {
         return BindingBuilder.bind(queue()).to(exchange()).with(ROUTING_KEY);
@@ -90,44 +61,25 @@ public class RabbitConfiguration {
         return new JavaTimeModule();
     }
 
-
-    // Spring ���� �ڵ��������ִ� ConnectionFactory �� SimpleConnectionFactory
-    // ���⼭ ����ϴ� �� CachingConnectionFactory �� ���� �������
     @Bean
     public ConnectionFactory connectionFactory() {
         CachingConnectionFactory factory = new CachingConnectionFactory();
-        factory.setHost("localhost");
-        factory.setUsername("guest");
-        factory.setPassword("guest");
+        factory.setHost(host);
+        factory.setUsername(username);
+        factory.setPassword(password);
         return factory;
     }
-
-    /**
-     * messageConverter�� Ŀ���͸���¡ �ϱ� ���� Bean ���� ���
-     */
-
+    
     @Bean
     public RabbitTemplate rabbitTemplate() {
         RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory());
-        rabbitTemplate.setMessageConverter(jsonMessageConverter());
+        //rabbitTemplate.setMessageConverter(jsonMessageConverter());
         rabbitTemplate.setRoutingKey(CHAT_QUEUE_NAME);
         return rabbitTemplate;
     }
     
-    /*
-    @Bean
-    public SimpleMessageListenerContainer container() {
-        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
-        container.setConnectionFactory(connectionFactory());
-        container.setQueueNames(CHAT_QUEUE_NAME);
-        container.setMessageListener(null);
-        return container;
-    }
-    */
-    
     @Bean
     public Jackson2JsonMessageConverter jsonMessageConverter() {
-        //LocalDateTime serializable �� ����
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, true);
         objectMapper.registerModule(dateTimeModule());

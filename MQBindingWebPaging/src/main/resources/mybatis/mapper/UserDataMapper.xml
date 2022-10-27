@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ytn.mq.project.dao.UserDataDao">
+	
+	<select id="selectUserInfoData" parameterType="String" resultType="com.ytn.mq.project.dto.UserInfoDataDto">
+		SELECT user_id, password, user_name, auth_type FROM YTNDI.CAPTION_USER_INFO
+		WHERE status = 'Y' 
+		AND user_id = #{userId}
+	</select>
+	
+	<select id="selectUserInfoDataCnt" parameterType="com.ytn.mq.project.vo.UserDataVo" resultType="Integer">
+		SELECT count(*) FROM YTNDI.CAPTION_USER_INFO
+		WHERE user_id = #{userId}
+	</select>
+	
+	
+	<insert id="insertUserInfoData" parameterType="com.ytn.mq.project.vo.UserDataVo">
+		INSERT INTO YTNDI.CAPTION_USER_INFO (USER_ID, PASSWORD, USER_NAME, STATUS, AUTH_TYPE, CREATE_DATE)
+		VALUES(#{userId}, #{password}, #{userName}, 'Y', 'MEMBER', SYSDATE)
+	</insert>
+	
+</mapper>
+

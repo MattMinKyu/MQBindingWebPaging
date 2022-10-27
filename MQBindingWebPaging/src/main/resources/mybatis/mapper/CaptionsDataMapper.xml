@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ytn.mq.project.dao.CaptionsDataDao">
+	
+	<select id="selectCaptionsInfoListCnt" parameterType="com.ytn.mq.project.vo.PageingVo" resultType="Integer">
+		SELECT COUNT(*) FROM(
+		    SELECT * FROM YTNDI.CAPTION_DETAIL
+		    WHERE TO_CHAR(mq_ins_date, 'YYYYMMDDHH24') BETWEEN #{strDate} AND #{endDate}
+		    <if test='searchText != null and searchText != ""'>
+			    AND UPPER(context) LIKE UPPER('%' || #{searchText} || '%')
+			</if>
+		    ORDER BY CAPTION_IDX ASC
+		)
+	</select>
+	
+	<select id="selectCaptionsInfoList" parameterType="com.ytn.mq.project.vo.PageingVo" resultType="com.ytn.mq.project.dto.CaptionsDataDto">
+		SELECT *
+			FROM(SELECT rownum rowIdx, x.* FROM (
+			    SELECT caption_idx, context, TO_CHAR(mq_ins_date, 'YYYY-MM-DD HH24:MI:SS') mq_ins_date, TO_CHAR(upd_date, 'YYYY-MM-DD HH24:MI:SS') upd_date, upd_userid
+			    FROM YTNDI.CAPTION_DETAIL
+			    WHERE TO_CHAR(mq_ins_date, 'YYYYMMDDHH24') BETWEEN #{strDate} AND #{endDate}
+			    <if test='searchText != null and searchText != ""'>
+			    	AND UPPER(context) LIKE UPPER('%' || #{searchText} || '%')
+			    </if>
+			    ORDER BY caption_idx ASC
+			) x)
+		WHERE rowIdx BETWEEN #{startPageIdx} AND #{endPageIdx}
+	</select>
+	
+	<select id="selectCaptionsInfoListForExcel" parameterType="com.ytn.mq.project.vo.PageingVo" resultType="com.ytn.mq.project.dto.CaptionsDataDto">
+	    SELECT caption_idx, context, TO_CHAR(mq_ins_date, 'YYYY-MM-DD HH24:MI:SS') mq_ins_date, TO_CHAR(upd_date, 'YYYY-MM-DD HH24:MI:SS') upd_date, upd_userid
+	    FROM YTNDI.CAPTION_DETAIL
+	    WHERE TO_CHAR(mq_ins_date, 'YYYYMMDDHH24') BETWEEN #{strDate} AND #{endDate}
+	    <if test='searchText != null and searchText != ""'>
+			AND UPPER(context) LIKE UPPER('%' || #{searchText} || '%')
+		</if>
+	    ORDER BY caption_idx ASC
+	</select>
+	
+	<insert id="saveCaptionData" parameterType="com.ytn.mq.project.vo.CaptionsDataVo">
+		INSERT INTO YTNDI.CAPTION_DETAIL (CAPTION_IDX, CONTEXT, INS_DATE, UPD_USERID, UPD_DATE, MQ_INS_DATE)
+		VALUES(#{captionIdx}, #{context}, sysdate, #{updUserid}, TO_TIMESTAMP(#{mqInsDate}, 'YYYY-MM-DD HH24:MI:SS.FF'), TO_TIMESTAMP(#{mqInsDate}, 'YYYY-MM-DD HH24:MI:SS.FF'))
+	</insert>
+	
+	<select id="selectCaptionEditData" parameterType="String" resultType="com.ytn.mq.project.dto.CaptionsDataDto">
+		SELECT context FROM YTNDI.CAPTION_DETAIL
+		WHERE caption_idx = #{captionIdx}
+	</select>
+	
+	<update id="saveCaptionEditData" parameterType="com.ytn.mq.project.vo.CaptionsDataVo">
+		UPDATE YTNDI.CAPTION_DETAIL SET context = #{context}, upd_userid = #{updUserid}, upd_date = sysdate
+		WHERE caption_idx = #{captionIdx}
+	</update>
+</mapper>
+

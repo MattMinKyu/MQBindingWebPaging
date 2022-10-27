@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<th:block th:fragment="footerFragment">
+		<head>
+			<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+			<meta charset="UTF-8" />
+			<meta http-equiv="X-UA-Compatible" content="IE=edge">
+			<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+			<meta name="description" content="">
+			<meta name="author" content="">
+			
+			<title>footer</title>
+
+		</head>
+
+		<!-- Footer -->
+		<footer class="sticky-footer bg-white">
+			<div class="container my-auto">
+				<div class="copyright text-center my-auto">
+					<span>Copyright &copy; YTN All rights reserved. @author:mattmk</span>
+				</div>
+				
+				<div class="copyright text-right my-auto" id="mainMenuScoll" style ="display:none">
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="checkbox" id="autoScollDown" style="font-size:17px; width:23px;height:23px" th:onclick="autoScollDownClick()">
+						<label class="form-check-label" for="autoScoll">자동스크롤</label>
+					</div>
+				</div>
+			</div>
+		</footer>
+		<!-- End of Footer -->
+	</th:block>
+</html>

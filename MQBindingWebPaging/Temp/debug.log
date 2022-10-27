@@ -1,0 +1,9 @@
+[DEBUG] 10:33:07.569 c.y.m.p.MqBindingWebPagingApplication logStarting - Running with Spring Boot v2.6.4, Spring v5.3.16
+[DEBUG] 10:33:29.557 c.y.m.p.d.C.saveCaptionData debug - ==>  Preparing: INSERT INTO MK_DB.CAPTION_DETAIL (CAPTION_IDX, CONTEXT, INS_DATE, UPD_USERID, UPD_DATE, MQ_INS_DATE) VALUES(?, ?, sysdate, ?, TO_TIMESTAMP(?, 'YYYY-MM-DD HH24:MI:SS.FF'), TO_TIMESTAMP(?, 'YYYY-MM-DD HH24:MI:SS.FF'))
+[DEBUG] 10:33:29.691 c.y.m.p.d.C.saveCaptionData debug - ==> Parameters: 20221012103328701(String), [앵커] 본질을 왜곡하지 말아달라. 그러면 본심이 뭐라는 겁니까?
+ (String), SYSTEM(String), 2022-10-12 10:33:28.701(String), 2022-10-12 10:33:28.701(String)
+[DEBUG] 10:33:29.697 c.y.m.p.d.C.saveCaptionData debug - <==    Updates: 1
+[DEBUG] 10:33:32.654 c.y.m.p.d.C.saveCaptionData debug - ==>  Preparing: INSERT INTO MK_DB.CAPTION_DETAIL (CAPTION_IDX, CONTEXT, INS_DATE, UPD_USERID, UPD_DATE, MQ_INS_DATE) VALUES(?, ?, sysdate, ?, TO_TIMESTAMP(?, 'YYYY-MM-DD HH24:MI:SS.FF'), TO_TIMESTAMP(?, 'YYYY-MM-DD HH24:MI:SS.FF'))
+[DEBUG] 10:33:32.655 c.y.m.p.d.C.saveCaptionData debug - ==> Parameters: 20221012103332371(String), [김병민] 페이스북 전체 메시지가 꽤 장문의 글을 적었습니다.
+ (String), SYSTEM(String), 2022-10-12 10:33:32.371(String), 2022-10-12 10:33:32.371(String)
+[DEBUG] 10:33:32.659 c.y.m.p.d.C.saveCaptionData debug - <==    Updates: 1
