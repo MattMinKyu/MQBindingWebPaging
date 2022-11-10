@@ -181,4 +181,47 @@ public class DataRestController {
 		return jsonResult;
 	}
 	
+	/**
+	 * createRabbitmqQueue.
+	 * 
+	 * @author mattmk
+	 * @param String
+	 * @return Boolean
+	 */
+	@PostMapping("createRabbitmqQueue")
+	public Boolean createRabbitmqQueue(@RequestParam(value = "randomTargetName")String randomTargetName) {
+		
+		Boolean result = Boolean.FALSE;
+		
+		logger.info("[DataRestController] [getQueueName] [randomTargetName] ====> {}", randomTargetName);
+		
+		result = ytnUtilServiceImpl.createRabbitmqQueue(randomTargetName);
+		logger.info("[DataRestController] [getQueueName] [result] ====> {}", result);
+		
+		return result;
+	}
+	
+	
+	/**
+	 * deleteTargetQueue.
+	 * 
+	 * @author mattmk
+	 * @param String
+	 * @return
+	 */
+	@PostMapping("deleteTargetQueue")
+	public void deleteTargetQueue(@RequestParam(value = "queueName")String queueName) {
+		
+		Boolean result = Boolean.FALSE;
+		
+		
+		result = ytnUtilServiceImpl.deleteTargetQueue(queueName);
+		
+		if(result) {
+			logger.info("[DataRestController] [deleteTargetQueue] [SUCCESS] ====> {}", queueName);
+		}else {
+			logger.error("[DataRestController] [deleteTargetQueue] [FAIL] ====> {}", queueName);
+		}
+	}
+	
 }

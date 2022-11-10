@@ -28,7 +28,6 @@ public class MainController {
     @Value("${spring.rabbitmq.password}")
     private String passWord;
     
-	
     @GetMapping("realTimeView")
     public String getMain(Model model) {
     	logger.info("======= [MainController] [getMain] [Init] =======");
@@ -86,8 +85,7 @@ public class MainController {
         };
         m_timer.scheduleAtFixedRate(m_task, 0l, 1000);
         */
-        
-        
+    	
         model.addAttribute("userName", Base64.getEncoder().encodeToString(userName.getBytes()));
         model.addAttribute("passWord", Base64.getEncoder().encodeToString(passWord.getBytes()));
         

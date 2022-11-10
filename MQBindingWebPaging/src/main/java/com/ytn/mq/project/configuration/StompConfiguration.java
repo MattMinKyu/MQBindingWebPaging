@@ -9,13 +9,14 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @Configuration
 @EnableWebSocketMessageBroker
 public class StompConfiguration implements WebSocketMessageBrokerConfigurer {
-
+	
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/stomp/captions")
         		//.setAllowedOrigins("*")
                 .setAllowedOriginPatterns("*")
                 .withSockJS();
+                //.setHeartbeatTime(30);
     }
 
     @Override

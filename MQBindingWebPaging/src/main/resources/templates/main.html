@@ -19,6 +19,7 @@
 		<!-- End of Sidebar -->
 		<input type="hidden" id="userTarget1" name="userTarget1" th:value="${userName}">
         <input type="hidden" id="userTarget2" name="userTarget2" th:value="${passWord}">
+        <input type="hidden" id="targetQueue" name="targetQueue" th:value="${targetQueue}">
         
 
 		<!-- Content Wrapper -->
@@ -68,7 +69,7 @@
 	<script type="text/javascript" th:src="@{/js/stomp.min.js}"></script>
 	<!-- ytn js file -->
 	<script type="text/javascript" th:src="@{/js/ytn.sg.min.js}"></script>
-	
+    
 	<script th:inline="javascript">
         //창크기 변경.
         //$('#content').height($(window).height()-100);
@@ -79,6 +80,9 @@
          * Main화면 진입시,  Main Dept Set.
          * @author : mattmk
         */
+
+        window.addEventListener('beforeunload', deleteTargetQueue);
+
         activeLeftMenuIdx(0);
         
         var autogetCaptionsTimer;
@@ -94,7 +98,20 @@
         $('#autoScollDown').prop('checked' , true);
         $('#mainMenuScoll').show();
         
-        /**
+        function createTimerFromScroll(){
+            autoScrollTimer = setInterval(function(){
+                //$("html, body").stop().animate({ scrollTop: $(document).height() }, 500);
+                $("#cardBody").scrollTop($("#cardBody")[0].scrollHeight);
+                window.scrollTo(0,document.body.scrollHeight);
+            }, 2000);
+        }
+
+        function deleteTimerFromScroll(){
+            clearInterval(autoScrollTimer);
+            autoScrollTimer = undefined;
+        }
+
+         /**
          * 자동스크롤 체크 Top.
          * @author : mattmk
         */
@@ -126,17 +143,6 @@
             }
         }
 
-        function createTimerFromScroll(){
-            autoScrollTimer = setInterval(function(){
-                //$("html, body").stop().animate({ scrollTop: $(document).height() }, 500);
-                $("#cardBody").scrollTop($("#cardBody")[0].scrollHeight);
-                window.scrollTo(0,document.body.scrollHeight);
-            }, 2000);
-        }
-
-        function deleteTimerFromScroll(){
-            clearInterval(autoScrollTimer);
-        }
     </script>
 </body>
 

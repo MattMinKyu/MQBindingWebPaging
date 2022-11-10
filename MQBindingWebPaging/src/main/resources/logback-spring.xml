@@ -4,8 +4,10 @@
     <!-- Created By yeoseong_yoon -->
     <!-- 로그 경로 변수 선언 -->
     <!-- local -->
-    <!-- <property name="LOG_DIR" value="C:/Temp/logs" />
-    <property name="LOG_PATH" value="C:/Temp"/> -->
+    <!-- 
+    <property name="LOG_DIR" value="C:/Temp/logs" />
+    <property name="LOG_PATH" value="C:/Temp"/>
+     -->
     <!-- prod -->
     <property name="LOG_DIR" value="/ytn/log/logs" />
     <property name="LOG_PATH" value="/ytn/log"/>
