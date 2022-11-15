@@ -80,26 +80,35 @@
          * Main화면 진입시,  Main Dept Set.
          * @author : mattmk
         */
+        const GV = {
+            isPause: true,
+            autoScrollTimer: null
+        }
 
         window.addEventListener('beforeunload', deleteTargetQueue);
 
         activeLeftMenuIdx(0);
         
-        var autogetCaptionsTimer;
-        var autoScrollTimer;
         /**
             첫 진입시, auto scroll 활성화
         **/
+       
         setTimeout(function() {
             createTimerFromScroll();
-        }, 50000);
+        //}, 50000);
+        }, 30000);
+        
 
         $('#autoScollTop').prop('checked' , true);
         $('#autoScollDown').prop('checked' , true);
         $('#mainMenuScoll').show();
-        
+        //createTimerFromScroll();
+
         function createTimerFromScroll(){
-            autoScrollTimer = setInterval(function(){
+            GV.isPause = true;
+            console.log('createTimerFromScroll() [GV.isPause] ----> ',GV.isPause);
+
+            GV.autoScrollTimer = setInterval(function(){
                 //$("html, body").stop().animate({ scrollTop: $(document).height() }, 500);
                 $("#cardBody").scrollTop($("#cardBody")[0].scrollHeight);
                 window.scrollTo(0,document.body.scrollHeight);
@@ -107,8 +116,10 @@
         }
 
         function deleteTimerFromScroll(){
-            clearInterval(autoScrollTimer);
-            autoScrollTimer = undefined;
+            clearInterval(GV.autoScrollTimer);
+
+            GV.isPause = false;
+            console.log('deleteTimerFromScroll() [GV.isPause] ----> ',GV.isPause);
         }
 
          /**
@@ -119,11 +130,16 @@
             if($('#autoScollTop').is(':checked')){
                 $('#autoScollTop').prop('checked' , true);
                 $('#autoScollDown').prop('checked' , true);
-                createTimerFromScroll();
+
+                if(!GV.isPause){
+                    createTimerFromScroll();
+                }
             }else{
                 $('#autoScollTop').prop('checked' , false);
                 $('#autoScollDown').prop('checked' , false);
-                deleteTimerFromScroll();
+                if(GV.isPause){
+                    deleteTimerFromScroll();
+                }
             }
         }
 
@@ -135,11 +151,15 @@
             if($('#autoScollDown').is(':checked')){
                 $('#autoScollTop').prop('checked' , true);
                 $('#autoScollDown').prop('checked' , true);
-                createTimerFromScroll();
+                if(!GV.isPause){
+                    createTimerFromScroll();
+                }
             }else{
                 $('#autoScollTop').prop('checked' , false);
                 $('#autoScollDown').prop('checked' , false);
-                deleteTimerFromScroll();
+                if(GV.isPause){
+                    deleteTimerFromScroll();
+                }
             }
         }
 

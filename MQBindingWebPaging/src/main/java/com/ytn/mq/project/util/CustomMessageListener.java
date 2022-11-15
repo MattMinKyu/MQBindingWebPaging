@@ -29,7 +29,6 @@ public class CustomMessageListener {
 	
 	@SuppressWarnings("deprecation")
 	@RabbitListener(queues = "dtvcc_global3")
-	//@RabbitListener(queues = "chat.queue")
     public void processMessage(final CaptionsRbMqVo captionsRbMqVo) {
 		
 		if(captionsRbMqVo == null) {
