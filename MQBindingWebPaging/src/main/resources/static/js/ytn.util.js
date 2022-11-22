@@ -55,7 +55,7 @@ function leftMenuSet(){
  * Server DateTime Format Convert.
  * @author : mattmk
  **/
-function getServerFormatDate(paramDate) {
+function getServerFormatDate(paramDate, targetType) {
 	if(paramDate == ''){
 		return '';
 	}
@@ -64,6 +64,13 @@ function getServerFormatDate(paramDate) {
 	var month = dateFormatTime(paramDate.getMonth()+1);
 	var day = dateFormatTime(paramDate.getDate());
 	var hour = dateFormatTime(paramDate.getHours());
+
+	if(targetType == 'str'){
+		hour += '0000000';
+	}else if(targetType == 'end'){
+		hour += '5999999';
+	}
+
 
 	return year+month+day+hour;
 }
@@ -228,7 +235,7 @@ function downloadTxtFileClick(startDate, endDate, searchText){
 					return false;
 				}
 
-				downloadTemplate('속기사_'+startDate.substring(2,startDate.length)+'_'+endDate.substring(2,endDate.length), data);
+				downloadTemplate('속기사_'+startDate.substring(0,startDate.length-7)+'_'+endDate.substring(0,endDate.length-7), data);
 			},
 			complete: function () {
 				setTimeout(function() {

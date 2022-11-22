@@ -3,14 +3,11 @@
 <mapper namespace="com.ytn.mq.project.dao.CaptionsDataDao">
 	
 	<select id="selectCaptionsInfoListCnt" parameterType="com.ytn.mq.project.vo.PageingVo" resultType="Integer">
-		SELECT COUNT(*) FROM(
-		    SELECT * FROM YTNDI.CAPTION_DETAIL
-		    WHERE TO_CHAR(mq_ins_date, 'YYYYMMDDHH24') BETWEEN #{strDate} AND #{endDate}
+		SELECT COUNT(*) FROM YTNDI.CAPTION_DETAIL
+		    WHERE CAPTION_IDX BETWEEN #{strDate} AND #{endDate}
 		    <if test='searchText != null and searchText != ""'>
 			    AND UPPER(context) LIKE UPPER('%' || #{searchText} || '%')
 			</if>
-		    ORDER BY CAPTION_IDX ASC
-		)
 	</select>
 	
 	<select id="selectCaptionsInfoList" parameterType="com.ytn.mq.project.vo.PageingVo" resultType="com.ytn.mq.project.dto.CaptionsDataDto">
@@ -18,7 +15,7 @@
 			FROM(SELECT rownum rowIdx, x.* FROM (
 			    SELECT caption_idx, context, TO_CHAR(mq_ins_date, 'YYYY-MM-DD HH24:MI:SS') mq_ins_date, TO_CHAR(upd_date, 'YYYY-MM-DD HH24:MI:SS') upd_date, upd_userid
 			    FROM YTNDI.CAPTION_DETAIL
-			    WHERE TO_CHAR(mq_ins_date, 'YYYYMMDDHH24') BETWEEN #{strDate} AND #{endDate}
+			    WHERE CAPTION_IDX BETWEEN #{strDate} AND #{endDate}
 			    <if test='searchText != null and searchText != ""'>
 			    	AND UPPER(context) LIKE UPPER('%' || #{searchText} || '%')
 			    </if>
@@ -30,7 +27,7 @@
 	<select id="selectCaptionsInfoListForExcel" parameterType="com.ytn.mq.project.vo.PageingVo" resultType="com.ytn.mq.project.dto.CaptionsDataDto">
 	    SELECT caption_idx, context, TO_CHAR(mq_ins_date, 'YYYY-MM-DD HH24:MI:SS') mq_ins_date, TO_CHAR(upd_date, 'YYYY-MM-DD HH24:MI:SS') upd_date, upd_userid
 	    FROM YTNDI.CAPTION_DETAIL
-	    WHERE TO_CHAR(mq_ins_date, 'YYYYMMDDHH24') BETWEEN #{strDate} AND #{endDate}
+	    WHERE CAPTION_IDX BETWEEN #{strDate} AND #{endDate}
 	    <if test='searchText != null and searchText != ""'>
 			AND UPPER(context) LIKE UPPER('%' || #{searchText} || '%')
 		</if>

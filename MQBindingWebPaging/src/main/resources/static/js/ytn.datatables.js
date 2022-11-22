@@ -34,8 +34,8 @@
 				// 페이지 사이즈, 한 페이지에 몇개의 row인지
 	            d.pageSize =dataTableName.DataTable().page.len();
 				d.searchText = $('#searchText').val();
-				d.strDateTime = getServerFormatDate(strDateTime.datetimepicker('getDate'));
-				d.endDateTime = getServerFormatDate(endDateTime.datetimepicker('getDate'));
+				d.strDateTime = getServerFormatDate(strDateTime.datetimepicker('getDate'), 'str');
+				d.endDateTime = getServerFormatDate(endDateTime.datetimepicker('getDate'), 'end');
 
 				// 정렬조건 컬럼명
 	            //d.orderBy = orderColumn[$('#table').DataTable().order()[0][0]];

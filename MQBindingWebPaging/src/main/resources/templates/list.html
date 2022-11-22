@@ -225,7 +225,7 @@
         **/
         function getListExcelData(){
             if(formDataChkFunction()){
-                downloadTxtFileClick(getServerFormatDate(strDatePicker.datetimepicker('getDate')), getServerFormatDate(endDatePicker.datetimepicker('getDate')), $('#searchText').val());
+                downloadTxtFileClick(getServerFormatDate(strDatePicker.datetimepicker('getDate'), 'str'), getServerFormatDate(endDatePicker.datetimepicker('getDate'), 'end'), $('#searchText').val());
             }
         }
         
@@ -235,8 +235,8 @@
         **/
         function getExList(){
             if(formDataChkFunction()){
-                $('#searchStrDate').val(getServerFormatDate(strDatePicker.datetimepicker('getDate')));
-                $('#searchEndDate').val(getServerFormatDate(endDatePicker.datetimepicker('getDate')));
+                $('#searchStrDate').val(getServerFormatDate(strDatePicker.datetimepicker('getDate'), 'str'));
+                $('#searchEndDate').val(getServerFormatDate(endDatePicker.datetimepicker('getDate'), 'end'));
 
                 window.open("/ytn/captions/captionPreviewList" ,"previewPopup","width=1500, height=1000, resizeable, scrollbars");
             }

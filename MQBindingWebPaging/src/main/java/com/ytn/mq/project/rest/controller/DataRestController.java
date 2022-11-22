@@ -42,12 +42,21 @@ public class DataRestController {
 	 * @param Integer, Integer, String, String, String, Integer
 	 * @return String
 	 */
+	@SuppressWarnings("deprecation")
 	@PostMapping("getList")
 	public String getList(@RequestParam(value = "start")Integer start, @RequestParam(value = "pageSize")Integer pageSize,
 							@RequestParam(value = "searchText")String searchText, @RequestParam(value = "strDateTime")String strDateTime,
 							@RequestParam(value = "endDateTime")String endDateTime, @RequestParam(value = "page")Integer page) {
 		
 		String jsonList="";
+		
+		if(StringUtils.isEmpty(strDateTime) || StringUtils.isEmpty(endDateTime)
+				|| strDateTime.length() != 17 || endDateTime.length() != 17) {
+			
+			logger.info("[DataRestController] [getList] [paramDatas] [strDateTime] [NULL] ====> {}", strDateTime);
+			logger.info("[DataRestController] [getList] [paramDatas] [endDateTime] [NULL] ====> {}", endDateTime);
+			return jsonList;
+		}
 		
         PageingVo pageingVo = new PageingVo();
         pageingVo.setStartPageIdx(start+1);
@@ -135,7 +144,7 @@ public class DataRestController {
 		String result = "";
 		
 		if(StringUtils.isEmpty(strDateTime) || StringUtils.isEmpty(endDateTime)
-				|| strDateTime.length() != 10 || endDateTime.length() != 10) {
+				|| strDateTime.length() != 17 || endDateTime.length() != 17) {
 			
 			logger.info("[DataRestController] [getExcelData] [paramDatas] [strDateTime] [NULL] ====> {}", strDateTime);
 			logger.info("[DataRestController] [getExcelData] [paramDatas] [endDateTime] [NULL] ====> {}", endDateTime);
@@ -165,7 +174,11 @@ public class DataRestController {
 		
 		String jsonResult="";
 		
-		if(StringUtils.isEmpty(searchStrDate) || StringUtils.isEmpty(searchEndDate)){
+		if(StringUtils.isEmpty(searchStrDate) || StringUtils.isEmpty(searchEndDate)
+				|| searchStrDate.length() != 17 || searchEndDate.length() != 17) {
+			
+			logger.info("[DataRestController] [getPreviewData] [paramDatas] [searchStrDate] [NULL] ====> {}", searchStrDate);
+			logger.info("[DataRestController] [getPreviewData] [paramDatas] [searchEndDate] [NULL] ====> {}", searchEndDate);
 			return jsonResult;
 		}
 		
