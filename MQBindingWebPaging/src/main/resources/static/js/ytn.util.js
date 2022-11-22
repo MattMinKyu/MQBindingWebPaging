@@ -222,7 +222,6 @@ function downloadTxtFileClick(startDate, endDate, searchText){
 				}
 			},
 			success : function(data){
-				console.log('data ----> ', data);
 				if(data == ''){
 					alert('해당 데이터가 없습니다.');
 					$("#div_ajax_load_image").hide();
