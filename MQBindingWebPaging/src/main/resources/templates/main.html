@@ -94,7 +94,9 @@
         **/
        
         setTimeout(function() {
-            createTimerFromScroll();
+            if(GV.isPause){
+                createTimerFromScroll();
+            }
         //}, 50000);
         }, 30000);
         
