@@ -2,7 +2,9 @@ package com.ytn.mq.project.serviceImpl;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,7 +47,6 @@ public class CaptionsDataServiceImpl implements CaptionsDataService{
 		try {
 			returnData = mapper.writeValueAsString(wrapperDto);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			logger.error("[CaptionsDataServiceImpl] [getCaptionsDataJson] [Try Catch returnData] [Exception] ====> {}", e);
 		};
@@ -117,7 +118,13 @@ public class CaptionsDataServiceImpl implements CaptionsDataService{
 		try {
 			returnData = mapper.writeValueAsString(wrapperDto);
 		}catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
+			try {
+				returnData = mapper.writeValueAsString("");
+			} catch (JsonProcessingException e1) {
+				logger.error("[CaptionsDataServiceImpl] [getCaptionsDataJson] [selectCaptionsInfoList] [JsonProcessingException] ====> {}", e1);
+				e1.printStackTrace();
+			}
+			
 			e.printStackTrace();
 			logger.error("[CaptionsDataServiceImpl] [getCaptionsDataJson] [Exception] ====> {}", e);
 		}
@@ -185,7 +192,13 @@ public class CaptionsDataServiceImpl implements CaptionsDataService{
 		try {
 			returnData = mapper.writeValueAsString(captionsDataDto);
 		}catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
+			try {
+				returnData = mapper.writeValueAsString("");
+			} catch (JsonProcessingException e1) {
+				logger.error("[CaptionsDataServiceImpl] [getCaptionEditDataJson] [JsonProcessingException] ====> {}", e1);
+				e1.printStackTrace();
+			}
+			
 			e.printStackTrace();
 			logger.error("[CaptionsDataServiceImpl] [getCaptionEditDataJson] [Exception] ====> {}", e);
 		}
@@ -217,6 +230,83 @@ public class CaptionsDataServiceImpl implements CaptionsDataService{
 		}
 		
 		return resultReturn;
+	}
+	
+	@Override
+	public String newMoveDataTableBeforeCnt(String paramAuthData) {
+		String resultStr = "";
+		String tempStr = "0";
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		if(paramAuthData != "" && paramAuthData.equals("ADMIN")) {
+			tempStr = Integer.toString(captionsDataDao.selectProcedureNewMoveDataBeforeCnt());
+		}
+		
+		try {
+			resultStr = mapper.writeValueAsString(tempStr);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+			logger.error("[CaptionsDataServiceImpl] [newMoveDataTable] [JsonProcessingException] ====> {}", e);
+		}
+		
+		
+		
+		return resultStr;
+	}
+	
+	
+	
+	@Override
+	@Transactional(rollbackFor = {RuntimeException.class, Exception.class})
+	public String newMoveDataTable(String paramAuthData) {
+		String resultStr = "";
+		ObjectMapper mapper = new ObjectMapper();
+		
+		if(paramAuthData == "" || !paramAuthData.equals("ADMIN")) {
+			try {
+				resultStr = mapper.writeValueAsString("");
+			} catch (JsonProcessingException e) {
+				e.printStackTrace();
+				logger.error("[CaptionsDataServiceImpl] [newMoveDataTable] [JsonProcessingException] ====> {}", e);
+			}
+			
+			return resultStr;
+		}
+		
+		Map<String, Object> receiveMap = new HashMap<String, Object>();
+		receiveMap.put("pResult", "");
+		
+		String pResult = "";
+		
+		try {
+			captionsDataDao.procedureNewMoveDataTable(receiveMap);
+			
+			pResult = (String) receiveMap.get("pResult");
+			
+			logger.info("[CaptionsDataServiceImpl] [newMoveDataTable] [pResult] ====> {}", pResult);
+			
+			String[] receiveArray = new String[receiveMap.size()];
+			receiveArray = pResult.split("//");
+			Map<String, String> resultMap = new HashMap<String, String>();
+			
+			resultMap.put("resultCode", receiveArray[0]);
+			resultMap.put("resultMessage", receiveArray[1]);
+			
+			resultStr = mapper.writeValueAsString(resultMap);
+			
+			if(!receiveArray[0].equals("200")) {
+				logger.error("[CaptionsDataServiceImpl] [newMoveDataTable] [Exception] [ErrorCode] ====> {}", receiveArray[0]);
+				logger.error("[CaptionsDataServiceImpl] [newMoveDataTable] [Exception] [ErrorMessage] ====> {}", receiveArray[1]);
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			logger.error("[CaptionsDataServiceImpl] [newMoveDataTable] [Exception] ====> {}", e);
+		}
+		
+		
+		return resultStr;
 	}
 	
 }

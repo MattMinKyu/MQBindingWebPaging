@@ -4,6 +4,7 @@
 */
 
 var clickCnt=0;
+var targetCnt=0;
 
 /**
  * 공통 Cookie 삭제.
@@ -231,7 +232,7 @@ function downloadTxtFileClick(startDate, endDate, searchText){
 			success : function(data){
 				if(data == ''){
 					alert('해당 데이터가 없습니다.');
-					$("#div_ajax_load_image").hide();
+					ajaxLoadImageDefult();
 					return false;
 				}
 
@@ -239,13 +240,13 @@ function downloadTxtFileClick(startDate, endDate, searchText){
 			},
 			complete: function () {
 				setTimeout(function() {
-					$("#div_ajax_load_image").hide();
+					ajaxLoadImageDefult();
 					clickCnt=0;
 				  }, 3000);
 			},
 			error:function(request,status,error){
 				console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-				$("#div_ajax_load_image").hide();
+				ajaxLoadImageDefult();
 				alert("관리자에게 문의해 주세요.");
 			}
 		});
@@ -264,4 +265,109 @@ function downloadTemplate(filename, text) {
     element.click();
 
     document.body.removeChild(element);
+}
+
+
+/**
+ * DataMoveAndDel Target Count.
+ * @author : mattmk
+ */
+function totalTargetCnt(){
+	$.ajax({
+			type: "POST",
+			url: "/ytn/captions/data/dataListMoveCnt", 
+			data: {
+			},
+			async: false,
+			dataType : "json",
+			success : function(data){
+				console.log('data ---->' , data);
+				targetCnt = data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+			},
+			error:function(request,status,error){
+				console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				targetCnt=0;
+				alert("관리자에게 문의해 주세요.");
+			}
+		});
+}
+
+
+
+/**
+ * DataMoveAndDel Click.
+ * @author : mattmk
+ */
+function dataMoveAndDelClick(){
+	totalTargetCnt();
+
+	var result = confirm('데이터 이관을 진행 하시겠습니까? \n' + '총' + targetCnt + ' 건');
+
+	if(clickCnt > 0){
+		alert('로딩 중 입니다.');
+		return false;
+	}
+
+	if(targetCnt == 0){
+		alert('이관할 데이터가 없습니다.');
+		return false;
+	}
+
+	if(result){
+		$.ajax({
+			type: "POST",
+			url: "/ytn/captions/data/dataListMove", 
+			data: {
+			},  
+			dataType : "json",
+			beforeSend: function () {
+				clickCnt++;
+				var width = 0;
+				var height = 0;
+				var left = 0;
+				var top = 0;
+			 
+			    width = 150;
+				height = 150;
+				top = ( $(window).height() - height ) / 2 + $(window).scrollTop();
+				left = ( $(window).width() - width ) / 2 + $(window).scrollLeft();
+			 
+			    if($("#div_ajax_load_image").length != 0) {
+					$("#div_ajax_load_image").css({"top": top+"px","left": left+"px"});
+					$("#div_ajax_load_image").show();
+				}else {
+					$('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="/img/ajax_loader6.gif" style="width:150px; height:150px;"></div>');
+				}
+			},
+			success : function(data){
+
+				if(data == ""){
+					alert("잘못된 접근 입니다.");
+					ajaxLoadImageDefult();
+					return false;
+				}else if(data.resultCode != '200'){
+					alert(data.resultMessage);
+					ajaxLoadImageDefult();
+					return false;
+				}else{
+					alert(data.resultMessage);
+					location.reload();
+				}
+			},
+			complete: function () {
+				setTimeout(function() {
+					ajaxLoadImageDefult();
+				  }, 20000);
+			},
+			error:function(request,status,error){
+				console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				alert("관리자에게 문의해 주세요.");
+			}
+		});
+	}
+}
+
+function ajaxLoadImageDefult(){
+	$("#div_ajax_load_image").hide();
+	clickCnt=0;
 }

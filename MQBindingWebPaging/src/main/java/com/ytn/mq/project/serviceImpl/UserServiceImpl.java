@@ -49,9 +49,9 @@ public class UserServiceImpl implements UserService{
 		
 		userInfoDataDto = this.loginUserIdChk(loginUserDataVo.getUserId());
 		
-		logger.info("[LoginUserServiceImpl] [loginAuth] [userInfoDataDto] ====> {}", userInfoDataDto.toString());
+		logger.info("[LoginUserServiceImpl] [loginAuth] [userInfoDataDto] ====> {}", userInfoDataDto);
 		
-		if(StringUtils.isEmpty(userInfoDataDto.getUser_id())) {
+		if(userInfoDataDto == null || StringUtils.isEmpty(userInfoDataDto.getUser_id())) {
 			return null;
 		}
 		

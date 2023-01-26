@@ -20,7 +20,7 @@
 			 <script type="text/javascript" th:src="@{/js/sb-admin-2.min.js}"></script>
 			 <script type="text/javascript" th:src="@{/js/jquery.cookie.js}"></script>
 			 <!-- ytn js file -->
-			 <script type="text/javascript" th:src="@{/js/ytn.util.js}"></script>
+			 <script type="text/javascript" th:src="@{/js/ytn.util.js?v=4}"></script>
 
 			 <link th:href="@{/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet">
 			 <link th:href="@{/css/font.css}" rel="stylesheet">
@@ -99,15 +99,22 @@
 								로그인
 							</a>
 
-							<!-- 회원가입 -->
 							<div th:if="${not #strings.isEmpty(session.authInfo) and session.authInfo.type=='ADMIN'}">
+								<!-- 회원가입 -->
 								<a class="dropdown-item" href="#" data-toggle="modal" th:onclick="registerUserClick()">
 									<i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
 									회원가입
 								</a>
 								<div class="dropdown-divider"></div>
+
+								<!-- 데이터 이관 -->
+								<a class="dropdown-item" href="#" data-toggle="modal" th:onclick="dataMoveAndDelClick()">
+									<i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+									데이터 이관
+								</a>
+								<div class="dropdown-divider"></div>
 							</div>
-							
+
 							<!-- Logout -->
 							<div th:if="${not #strings.isEmpty(session.authInfo)}">
 								<a class="dropdown-item" href="#" data-toggle="modal" th:onclick="logoutClick()">

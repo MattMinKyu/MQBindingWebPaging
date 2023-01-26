@@ -286,11 +286,11 @@ public class YtnUtilServiceImpl{
 			connection = factory.newConnection();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			logger.error("[YtnUtilServiceImpl] [createConnectionRabbitmq] [IOException] ====> {}", e);
+			//logger.error("[YtnUtilServiceImpl] [createConnectionRabbitmq] [IOException] ====> {}", e);
 			e.printStackTrace();
 			return null;
 		} catch (TimeoutException e) {
-			logger.error("[YtnUtilServiceImpl] [createConnectionRabbitmq] [TimeoutException] ====> {}", e);
+			//logger.error("[YtnUtilServiceImpl] [createConnectionRabbitmq] [TimeoutException] ====> {}", e);
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
@@ -324,7 +324,7 @@ public class YtnUtilServiceImpl{
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			logger.error("[YtnUtilServiceImpl] [createQueueRabbitmq] [IOException] ====> {}", e);
+			//logger.error("[YtnUtilServiceImpl] [createQueueRabbitmq] [IOException] ====> {}", e);
 			e.printStackTrace();
 			return null;
 		}

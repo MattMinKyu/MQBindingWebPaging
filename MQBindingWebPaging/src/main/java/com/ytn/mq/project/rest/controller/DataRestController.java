@@ -194,10 +194,60 @@ public class DataRestController {
 		return jsonResult;
 	}
 	
+	
+	/**
+	 * dataListMoveCnt rest api
+	 * 
+	 * @author mattmk
+	 * @param 
+	 * @return Boolean
+	 */
+	@PostMapping("dataListMoveCnt")
+	public String dataListMoveCnt(HttpSession session) {
+		
+		String resultStr = "";
+		String paramAuthData = "";
+		
+		AuthInfo authInfo = (AuthInfo) session.getAttribute("authInfo");
+		
+		if(authInfo != null) {
+			paramAuthData = authInfo.getType();
+		}
+		
+		resultStr = captionsDataService.newMoveDataTableBeforeCnt(paramAuthData);
+        
+		return resultStr;
+	}
+	
+	
+	/**
+	 * dataListMove rest api
+	 * 
+	 * @author mattmk
+	 * @param 
+	 * @return Boolean
+	 */
+	@PostMapping("dataListMove")
+	public String dataListMove(HttpSession session) {
+		
+		String resultStr = "";
+		String paramAuthData = "";
+		
+		AuthInfo authInfo = (AuthInfo) session.getAttribute("authInfo");
+		
+		if(authInfo != null) {
+			paramAuthData = authInfo.getType();
+		}
+		
+		resultStr = captionsDataService.newMoveDataTable(paramAuthData);
+        
+		return resultStr;
+	}
+	
 	/**
 	 * createRabbitmqQueue.
 	 * 
-	 * @author mattmk
+	 * @author mattmks
 	 * @param String
 	 * @return Boolean
 	 */

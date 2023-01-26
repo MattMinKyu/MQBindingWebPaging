@@ -51,4 +51,23 @@ public interface CaptionsDataService {
 	 */
 	public int saveCaptionData(CaptionsRbMqVo captionsRbMqVo) throws SQLException;
 	
+	
+	/**
+	 * newMoveDataTableBeforeCnt.
+	 * 
+	 * @author mattmk
+	 * @param String
+	 * @return String
+	 */
+	public String newMoveDataTableBeforeCnt(String paramAuthData);
+	
+	/**
+	 * Caption Data List Move.
+	 * 
+	 * @author mattmk
+	 * @param String
+	 * @return String
+	 */
+	public String newMoveDataTable(String paramAuthData);
+	
 }

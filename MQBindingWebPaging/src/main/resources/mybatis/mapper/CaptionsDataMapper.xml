@@ -48,5 +48,16 @@
 		UPDATE YTNDI.CAPTION_DETAIL SET context = #{context}, upd_userid = #{updUserid}, upd_date = sysdate
 		WHERE caption_idx = #{captionIdx}
 	</update>
+	
+	
+	<select id="selectProcedureNewMoveDataBeforeCnt" resultType="Integer">
+		SELECT COUNT(*) FROM YTNDI.CAPTION_DETAIL
+		WHERE 1=1
+	</select>
+		
+    <select id="procedureNewMoveDataTable" statementType="CALLABLE" resultType="hashmap">
+        CALL CLEAR_DCS_SP(#{pResult, mode=OUT, jdbcType=VARCHAR})
+    </select>
+
 </mapper>
 

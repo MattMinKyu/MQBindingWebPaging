@@ -1,6 +1,7 @@
 package com.ytn.mq.project.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -72,4 +73,23 @@ public interface CaptionsDataDao {
 	 * @return List<CaptionsDataDto>
 	 */
 	List<CaptionsDataDto> selectCaptionsInfoListForExcel(@RequestParam("pageingVo")PageingVo pageingVo);
+	
+	/**
+	 * procedureNewMoveDataTable Process Before Cnt.
+	 * 
+	 * @author mattmk
+	 * @param 
+	 * @return int
+	 */
+	int selectProcedureNewMoveDataBeforeCnt();
+	
+	/**
+	 * procedureNewMoveDataTable Process.
+	 * 
+	 * @author mattmk
+	 * @param Map<String, Object>
+	 * @return
+	 */
+	void procedureNewMoveDataTable(Map<String, Object> parameterMap);
+	
 }
