@@ -367,6 +367,15 @@ function dataMoveAndDelClick(){
 	}
 }
 
+/**
+ * beforeDataInsert Click.
+ * @author : mattmk
+ */
+function beforeDataInsertClick(){
+	var popup = window.open("/ytn/captions/captionBeforeDataInsert", "viewer", "width=1500, height=100");
+}
+
+
 function ajaxLoadImageDefult(){
 	$("#div_ajax_load_image").hide();
 	clickCnt=0;

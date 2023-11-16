@@ -1,5 +1,10 @@
 package com.ytn.mq.project.rest.controller;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -9,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ytn.mq.project.service.CaptionsDataService;
 import com.ytn.mq.project.serviceImpl.YtnUtilServiceImpl;
@@ -21,6 +27,7 @@ import com.ytn.mq.project.vo.PageingVo;
  * @author mattmk
  *
  */
+	
 @RestController
 @RequestMapping("/ytn/captions/data/")
 public class DataRestController {
@@ -285,6 +292,66 @@ public class DataRestController {
 		}else {
 			logger.error("[DataRestController] [deleteTargetQueue] [FAIL] ====> {}", queueName);
 		}
+	}
+	
+	/**
+	 * beforeCaptionDataInsert.
+	 * 
+	 * @author mattmk
+	 * @param MultipartHttpServletRequest, String
+	 * @return
+	 */
+	@PostMapping("beforeCaptionDataInsert")
+	public void beforeCaptionDataInsert(@RequestParam(value = "targetFile") MultipartFile targetFile, @RequestParam(value = "targetDate")String targetDate) {
+		
+		// @RequestParam(value = "targetFile") MultipartFile targetFile
+		// @RequestParam(value = "targetDate")String targetDate
+		logger.info("[DataRestController] [beforeCaptionDataInsert]  ====> OKAY");
+		
+		System.out.println("MKTEST"); // 파일의 파라미터 이름
+		System.out.println(targetDate); // 파일의 파라미터 이름
+		
+		Boolean result = Boolean.FALSE;
+		
+		System.out.println(targetFile); // 파일의 파라미터 이름
+		System.out.println(targetFile.getName()); // 파일의 파라미터 이름
+		System.out.println(targetFile.getSize()); // 파일의 사이즈
+		System.out.println(targetFile.getOriginalFilename()); // 파일의 실제 이름
+		
+		
+		
+		String line;
+		BufferedReader br = null;
+		try {
+			br = new BufferedReader(new InputStreamReader(targetFile.getInputStream(), "UTF-8"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			while((line=br.readLine()) != null) {
+				System.out.println(line);
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			br.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		/*
+		result = ytnUtilServiceImpl.deleteTargetQueue(queueName);
+		
+		if(result) {
+			logger.info("[DataRestController] [deleteTargetQueue] [SUCCESS] ====> {}", queueName);
+		}else {
+			logger.error("[DataRestController] [deleteTargetQueue] [FAIL] ====> {}", queueName);
+		}
+		*/
 	}
 	
 }

@@ -115,4 +115,11 @@ public class MainController {
     	
         return "captionPreviewList";
     }
+    
+    @PostMapping("captionBeforeDataInsert")
+    public String captionBeforeDataInsert() {
+    	logger.info("======= [captionBeforeDataInsert] [Init] =======");
+    	
+        return "captionBeforeDataInsert";
+    }
 }
